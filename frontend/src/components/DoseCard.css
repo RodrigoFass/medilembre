@@ -1,0 +1,147 @@
+.dose-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  transition: box-shadow var(--duration), transform var(--duration);
+}
+
+.dose-card:hover { box-shadow: var(--shadow-sm); }
+
+/* ── Status variants ── */
+.dose-pending {
+  border-left: 3px solid var(--warning-500);
+}
+
+.dose-taken {
+  border-left: 3px solid var(--success-500);
+  background: color-mix(in srgb, var(--success-50) 60%, var(--surface));
+}
+
+.dose-missed {
+  border-left: 3px solid var(--danger-500);
+  background: color-mix(in srgb, var(--danger-50) 50%, var(--surface));
+  opacity: 0.8;
+}
+
+/* ── Time ── */
+.dose-time {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  min-width: 52px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Info ── */
+.dose-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.dose-name {
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.dose-amount {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  background: var(--gray-100);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+}
+
+/* Badges from History.css are shared, but keep local for DoseCard context */
+.dose-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+
+.dose-badge-pending { background: var(--warning-50);  color: var(--warning-600); }
+.dose-badge-taken   { background: var(--success-50);  color: var(--success-600); }
+.dose-badge-missed  { background: var(--danger-50);   color: var(--danger-600); }
+
+/* ── Actions ── */
+.dose-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.btn-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: var(--success-500);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background var(--duration-fast), transform var(--duration-fast), box-shadow var(--duration-fast);
+  white-space: nowrap;
+}
+
+.btn-confirm:hover {
+  background: var(--success-600);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(22,163,74,.35);
+}
+
+.btn-confirm:active { transform: translateY(0); }
+
+.btn-skip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: transparent;
+  color: var(--danger-600);
+  border: 1.5px solid var(--gray-200);
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background var(--duration-fast), border-color var(--duration-fast);
+  white-space: nowrap;
+}
+
+.btn-skip:hover { background: var(--danger-50); border-color: var(--danger-500); }
+
+/* ── Taken info ── */
+.dose-taken-info {
+  font-size: var(--text-xs);
+  color: var(--success-600);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+@media (max-width: 500px) {
+  .dose-card { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  .dose-actions { width: 100%; }
+  .btn-confirm, .btn-skip { flex: 1; justify-content: center; }
+}
