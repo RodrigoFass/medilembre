@@ -9,8 +9,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# All datetimes stored and compared as naive LOCAL time (America/Sao_Paulo).
-# The scheduler itself runs in America/Sao_Paulo, so datetime.now() matches.
+# todas as datas são salvas e comparadas no horário local (America/Sao_Paulo)
+# o scheduler também roda nesse fuso, então datetime.now() bate certinho
 
 
 def generate_todays_logs(app):
@@ -58,7 +58,7 @@ def generate_todays_logs(app):
 
 def mark_missed_doses(app):
     with app.app_context():
-        # Use datetime.now() (local time) to match stored naive local datetimes
+        # usa horário local pra bater com as datas salvas no banco
         cutoff = datetime.now() - timedelta(hours=1)
         overdue = DoseLog.query.filter(
             DoseLog.status == "pending",
@@ -72,7 +72,7 @@ def mark_missed_doses(app):
 
 def check_reminders(app):
     with app.app_context():
-        # Use datetime.now() (local time) to match stored naive local datetimes
+        # usa horário local pra bater com as datas salvas no banco
         now = datetime.now()
         window_end = now + timedelta(minutes=5)
 
@@ -104,7 +104,7 @@ def start_scheduler(app):
     if scheduler.running:
         return
 
-    # Do not start scheduler in testing environment
+    # não inicia o scheduler quando tá rodando os testes
     if app.config.get("TESTING"):
         return
 

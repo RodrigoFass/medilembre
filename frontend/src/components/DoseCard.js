@@ -3,11 +3,11 @@ import "./DoseCard.css";
 
 const STATUS_LABELS = { pending: "Pendente", taken: "Tomado", missed: "Perdido" };
 
-// Backend stores naive local datetimes without "Z". Appending "Z" would
-// wrongly treat them as UTC. We parse manually to preserve local display.
+// o backend salva as datas sem o "Z" no final (horário local mesmo)
+// se deixar o JS interpretar direto ele trata como UTC e mostra horário errado
 function parseLocalDateTime(str) {
   if (!str) return null;
-  // "2024-01-01T08:00:00" → treat as local, not UTC
+  // ex: "2024-01-01T08:00:00" → trata como horário local, não UTC
   const [datePart, timePart = "00:00:00"] = str.split("T");
   const [y, mo, d] = datePart.split("-").map(Number);
   const [h, mi] = timePart.split(":").map(Number);

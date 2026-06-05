@@ -25,7 +25,7 @@ export default function Dashboard() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Remover este paciente e todos os seus dados?")) return;
-    try { await api.delete(`/patients/${id}`); } catch { /* already handled by interceptor */ }
+    try { await api.delete(`/patients/${id}`); } catch { /* o interceptor já trata o erro */ }
     load();
   };
 

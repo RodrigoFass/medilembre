@@ -35,23 +35,23 @@ export default function PatientDetail() {
   useEffect(() => { load(); }, [id]);
 
   const handleConfirm = async (logId) => {
-    try { await api.post(`/doses/confirm/${logId}`); } catch { /* already handled by interceptor */ }
+    try { await api.post(`/doses/confirm/${logId}`); } catch { /* o interceptor já trata o erro */ }
     load();
   };
 
   const handleSkip = async (logId) => {
-    try { await api.post(`/doses/skip/${logId}`); } catch { /* already handled by interceptor */ }
+    try { await api.post(`/doses/skip/${logId}`); } catch { /* o interceptor já trata o erro */ }
     load();
   };
 
   const handleDeleteMed = async (medId) => {
     if (!window.confirm("Remover este medicamento?")) return;
-    try { await api.delete(`/medications/${medId}`); } catch { /* already handled by interceptor */ }
+    try { await api.delete(`/medications/${medId}`); } catch { /* o interceptor já trata o erro */ }
     load();
   };
 
   const handleToggleActive = async (med) => {
-    try { await api.put(`/medications/${med.id}`, { active: !med.active }); } catch { /* already handled by interceptor */ }
+    try { await api.put(`/medications/${med.id}`, { active: !med.active }); } catch { /* o interceptor já trata o erro */ }
     load();
   };
 

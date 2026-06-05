@@ -11,7 +11,7 @@ class Medication(db.Model):
     name = db.Column(db.String(120), nullable=False)
     dose = db.Column(db.String(60), nullable=False)
     frequency = db.Column(db.String(60), nullable=False)
-    # JSON string: ["08:00","14:00","20:00"]
+    # salvo como JSON no banco: ["08:00","14:00","20:00"]
     schedule_times = db.Column(db.Text, nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=True)
