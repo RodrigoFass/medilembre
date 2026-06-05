@@ -55,7 +55,9 @@ def create_medication(pid):
 @medications_bp.route("/<int:mid>", methods=["PUT"])
 @jwt_required()
 def update_medication(mid):
-    med = Medication.query.get_or_404(mid)
+    med = db.session.get(Medication, mid)
+    if not med:
+        return jsonify({"error": "Medicamento não encontrado"}), 404
     if not owns_patient(med.patient_id):
         return jsonify({"error": "Não autorizado"}), 403
     try:
@@ -85,7 +87,9 @@ def update_medication(mid):
 @medications_bp.route("/<int:mid>", methods=["DELETE"])
 @jwt_required()
 def delete_medication(mid):
-    med = Medication.query.get_or_404(mid)
+    med = db.session.get(Medication, mid)
+    if not med:
+        return jsonify({"error": "Medicamento não encontrado"}), 404
     if not owns_patient(med.patient_id):
         return jsonify({"error": "Não autorizado"}), 403
     db.session.delete(med)

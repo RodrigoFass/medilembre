@@ -54,7 +54,8 @@ def confirm_dose(log_id):
     if log.status != "pending":
         return jsonify({"error": "Dose já foi confirmada ou marcada como perdida"}), 409
     log.status = "taken"
-    log.taken_at = datetime.utcnow()
+    # horario local pra bater com o resto do sistema (scheduled_time tambem e local)
+    log.taken_at = datetime.now()
     if med.stock_quantity is not None and med.stock_quantity > 0:
         med.stock_quantity -= 1
     db.session.commit()
@@ -87,7 +88,7 @@ def history(patient_id):
     except (ValueError, TypeError):
         days = 30
 
-    since = datetime.utcnow() - timedelta(days=days)
+    since = datetime.now() - timedelta(days=days)
 
     logs = (
         DoseLog.query

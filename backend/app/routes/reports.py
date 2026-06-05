@@ -25,7 +25,7 @@ def generate_pdf(patient_id):
         days = max(1, min(int(request.args.get("days", 30)), 365))
     except (ValueError, TypeError):
         days = 30
-    since = datetime.utcnow() - timedelta(days=days)
+    since = datetime.now() - timedelta(days=days)
 
     logs = (
         DoseLog.query

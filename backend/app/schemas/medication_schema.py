@@ -15,6 +15,8 @@ class MedicationSchema(Schema):
     stock_alert_at = fields.Int(required=False, load_default=5,
                                 validate=validate.Range(min=0))
     instructions = fields.Str(required=False, allow_none=True, load_default=None)
+    # usado no botao Pausar/Reativar (PUT enviando so {active: true/false})
+    active = fields.Bool(required=False)
 
     @validates("schedule_times")
     def validate_times(self, value):

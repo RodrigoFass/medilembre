@@ -54,3 +54,24 @@ def test_delete_medication(client, auth_headers, patient_id):
     mid = resp.get_json()["id"]
     del_resp = client.delete(f"/api/medications/{mid}", headers=auth_headers)
     assert del_resp.status_code == 200
+
+
+def test_toggle_medication_active(client, auth_headers, patient_id):
+    # botao Pausar/Reativar manda so {active: ...}
+    resp = client.post(f"/api/medications/patient/{patient_id}",
+                       json=MED_PAYLOAD, headers=auth_headers)
+    mid = resp.get_json()["id"]
+    pausar = client.put(f"/api/medications/{mid}", json={"active": False},
+                        headers=auth_headers)
+    assert pausar.status_code == 200
+    assert pausar.get_json()["active"] is False
+    reativar = client.put(f"/api/medications/{mid}", json={"active": True},
+                          headers=auth_headers)
+    assert reativar.status_code == 200
+    assert reativar.get_json()["active"] is True
+
+
+def test_update_medication_not_found(client, auth_headers):
+    resp = client.put("/api/medications/99999", json={"active": False},
+                      headers=auth_headers)
+    assert resp.status_code == 404

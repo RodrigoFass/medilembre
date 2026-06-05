@@ -16,11 +16,15 @@ export default function PatientModal({ patient, onClose, onSaved }) {
     e.preventDefault();
     setLoading(true);
     setError("");
+    const payload = {
+      ...form,
+      birth_date: form.birth_date || null,
+    };
     try {
       if (patient) {
-        await api.put(`/patients/${patient.id}`, form);
+        await api.put(`/patients/${patient.id}`, payload);
       } else {
-        await api.post("/patients/", form);
+        await api.post("/patients/", payload);
       }
       onSaved();
     } catch (err) {

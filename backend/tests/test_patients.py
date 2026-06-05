@@ -47,6 +47,15 @@ def test_update_patient(client, auth_headers):
     assert upd.get_json()["name"] == "Nome Novo"
 
 
+def test_create_patient_empty_birth_date(client, auth_headers):
+    # o front envia "" quando a data fica em branco; precisa aceitar
+    resp = client.post("/api/patients/", json={
+        "name": "Sem Data", "birth_date": "", "notes": "",
+    }, headers=auth_headers)
+    assert resp.status_code == 201
+    assert resp.get_json()["birth_date"] is None
+
+
 def test_list_requires_auth(client):
     resp = client.get("/api/patients/")
     assert resp.status_code == 401
